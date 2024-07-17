@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <script src="./src/settings.js"></script>
+</head>
+<body>
+    <image id="lastUploadImg"></image>
+    <script>
+        setInterval( () => {
+            document.getElementById("lastUploadImg").src = localStorage.lastImg;
+        }, 100);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <script src="./src/faceapi/face-api.js"></script>
+    <script type = "module" src="./src/obs-module.js"></script>
+</head>
+
+<body>
+    <label for="websocketPort">Websocket Port:</label>
+    <input type="text" id="websocketPort">
+    <br>
+    <label for="websocketPassword">Websocket Password:</label>
+    <input type="password" id="websocketPassword">
+    <br>
+    <button id="obsConnectButton">ConnectToButton</button>
+    <br><br>
+
+    <label for="neutralImgInput">Neutral Avatar Image: </label>
+    <input type="file" id="neutralImgInput">
+    <br><br>
+    <label for="happyImgInput">Happy Avatar Image: </label>
+    <input type="file" id="happyImgInput">
+    <br><br>
+    <label for="angryImgInput">Angry Avatar Image: </label>
+    <input type="file" id="angryImgInput">
+    <br><br>
+    <label for="surprisedImgInput">Surprised Avatar Image: </label>
+    <input type="file" id="surprisedImgInput">
+    <br><br>
+    <label for="fearfulImgInput">Fearful Avatar Image: </label>
+    <input type="file" id="fearfulImgInput">
+    <br><br>
+    <label for="disgustedImgInput">Disgusted Avatar Image: </label>
+    <input type="file" id="disgustedImgInput">
+    <br><br>
+
+    <button id="redirectButton">Redirect!</button>
+
+    <script src="./src/settings.js" type="module"></script>
+</body>
+
+</html>

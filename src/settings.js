@@ -9,10 +9,41 @@ var inputNameToEmotion = {
     "disgustedImgInput": "Disgusted"
 };
 
+var emotionToInputName = {
+    "Neutral": "neutralImgInput",
+    "Happy": "happyImgInput",
+    "Angry": "angryImgInput",
+    "Surprised": "surprisedImgInput",
+    "Fearful": "fearfulImgInput",
+    "Disgusted": "disgustedImgInput"
+}
+
+var emotionToImgName = {
+    "Neutral": "neutralImg",
+    "Happy": "happyImg",
+    "Angry": "angryImg",
+    "Surprised": "surprisedImg",
+    "Fearful": "fearfulImg",
+    "Disgusted": "disgustedImg"
+}
+
 function connectToOBSClick(){
     const serverPort = document.getElementById("websocketPort").value;
     const serverPassword = document.getElementById("websocketPassword").value;
-    connectToOBS(serverPort, serverPassword);
+    const keys = Object.keys(emotionToImgName);
+    let imageAllLoaded = true;
+    keys.forEach((emotion) => {
+        const imgName = emotionToImgName[emotion];
+        if(imgName=""){
+            if(!(emotion in localStorage)){
+                alert(emotion+" Image is not Loaded!");
+                imageAllLoaded = false;
+            }
+        }
+    });
+    if(imageAllLoaded==true){
+        connectToOBS(serverPort, serverPassword);
+    }
 }
 
 function settingsImageUploaded(inputElement, id){
@@ -24,7 +55,9 @@ function settingsImageUploaded(inputElement, id){
         console.log(base64String);
         
         console.log("Src: "+base64String);
-        localStorage.setItem(inputNameToEmotion[id], base64String);
+        const emotion = inputNameToEmotion[id];
+        localStorage.setItem(emotion, base64String);
+        document.getElementById(emotionToImgName[emotion]).src = base64String;
     }
     if(file){
         reader.readAsDataURL(file);
@@ -41,6 +74,19 @@ inputDictKeys.forEach((inputName) => {
     });
 });
 
+function initImgs(){
+    const keys = Object.keys(emotionToImgName);
+    keys.forEach((emotion) => {
+        const imgName = emotionToImgName[emotion];
+        if(imgName=""){
+            if(emotion in localStorage){
+                const img = localStorage[emotion];
+                document.getElementById(imgName).src = img;
+            }
+        }
+    })
+}
+
 function redirectFunc(){
     connectToOBSClick();
     location.replace("./index.html");
@@ -48,3 +94,4 @@ function redirectFunc(){
 
 document.getElementById("obsConnectButton").addEventListener("click", connectToOBSClick);
 document.getElementById("redirectButton").addEventListener("click", redirectFunc);
+initImgs();

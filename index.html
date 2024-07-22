@@ -7,7 +7,6 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
-    <script src="./src/faceapi/face-api.js"></script>
     <script type = "module" src="./src/obs-module.js"></script>
 </head>
  
@@ -15,15 +14,11 @@
     <!-- <video id="video" width="720" height="560" autoplay muted></video> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/obs-websocket-js"></script> -->
     <!-- <script src="./src/face_module.js"></script> -->
-    <button id="openWebcamBtn">Start Cycle!</button>
-    <br>
-    <button id="stopWebcamBtn">End Cycle!</button>
-    <br>
-    <h1 id="imageBase64">
-        ImageBase64: 
-    </h1>
+    <select id="videoSourceSelect">
+
+    </select>
     
-    <img src="" id="uploadedImg">
+    <img src="" id="webcamCapture">
     
     <script type="module" src="./src/main.js"></script>
 </body>

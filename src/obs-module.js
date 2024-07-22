@@ -24,6 +24,18 @@ export function connectToOBS(serverPort, serverPassword){
     });
 }
 
+function checkSendErrorMessage(){
+    if(connectedFlag==false){
+        alert("OBS Websocket not connected properly! Please check the OBS Port and that Websocket Server is On! Redirecting to First Page!");
+        location.replace("./settings.html");
+        return;
+    }
+    if(identifiedFlag==false){
+        alert("OBS Websocket failed to Identify! Please check the Password! Redirecting to First Page!");
+        location.replace("./settings.html");
+    }
+}
+
 export function changeScene() {
     alert("changeScene called!");
     console.log("changeScene called!");
@@ -116,15 +128,41 @@ export async function changeSceneWithObj() {
     });
 }
 
+export function getVideoCaptureList(){
+    checkSendErrorMessage();
+    let returningInputList = undefined;
+
+    obs.on("Identified", () => {
+        obs.call('GetInputList', {inputKind: 'dshow_input'}).then((inputList) => {
+            returningInputList = inputList;
+        }).catch((error) => {
+            console.log(error);
+        })
+    })
+    return returningInputList;
+}
+
+export function getVideoSourceScreenshot(sourceName){
+    checkSendErrorMessage();
+    let returningImgString = "";
+
+    obs.on("Identified", () => {
+        obs.call('GetSourceScreenshot', {inputName: sourceName, imageFormat: 'png'}).then((imageData) => {
+            returningImgString = imageData;
+        }).catch((error) => {
+            console.log(error);
+        });
+    });
+    return returningImgString;
+}
+
 export function getWebcamSourceScreenshot(){
     alert("getWebcamSourceScreenshot called!");
     console.log("getWebcamSourceScreenshot called!");
     alert(serverURL+" "+password);
     var resultScreenshot = "";
     
-    if(!(connectedFlag||identifiedFlag)){
-        return;
-    }
+    checkSendErrorMessage();
 
     obs.on("Identified", ()=>{
         console.log("Listening!");

@@ -1,49 +1,78 @@
-import {connectToOBS} from "./obs-module.js"
+import {connectToOBS, getVideoCaptureList, saveVideoCaptureList, getWebcamSourceScreenshot} from "./obs-module.js"
 
-var inputNameToEmotion = {
-    "neutralImgInput": "Neutral",
-    "happyImgInput": "Happy",
-    "angryImgInput": "Angry",
-    "surprisedImgInput": "Surprised",
-    "fearfulImgInput": "Fearful",
-    "disgustedImgInput": "Disgusted"
+const inputNameToEmotion = {
+	"neutralImgInput": "Neutral",
+	"happyImgInput": "Happy",
+	"angryImgInput": "Angry",
+	"sadImgInput": "Sad",
+	"surprisedImgInput": "Surprised",
+	"fearfulImgInput": "Fearful",
+	"disgustedImgInput": "Disgusted"
 };
 
-var emotionToInputName = {
-    "Neutral": "neutralImgInput",
-    "Happy": "happyImgInput",
-    "Angry": "angryImgInput",
-    "Surprised": "surprisedImgInput",
-    "Fearful": "fearfulImgInput",
-    "Disgusted": "disgustedImgInput"
+const emotionToInputName = {
+	"Neutral": "neutralImgInput",
+	"Happy": "happyImgInput",
+	"Angry": "angryImgInput",
+	"Sad": "sadImgInput",
+	"Surprised": "surprisedImgInput",
+	"Fearful": "fearfulImgInput",
+	"Disgusted": "disgustedImgInput"
 }
 
-var emotionToImgName = {
-    "Neutral": "neutralImg",
-    "Happy": "happyImg",
-    "Angry": "angryImg",
-    "Surprised": "surprisedImg",
-    "Fearful": "fearfulImg",
-    "Disgusted": "disgustedImg"
+const emotionToImgName = {
+	"Neutral": "neutralImg",
+	"Happy": "happyImg",
+	"Angry": "angryImg",
+	"Sad": "sadImg",
+	"Surprised": "surprisedImg",
+	"Fearful": "fearfulImg",
+	"Disgusted": "disgustedImg"
 }
 
 function connectToOBSClick(){
-    const serverPort = document.getElementById("websocketPort").value;
-    const serverPassword = document.getElementById("websocketPassword").value;
-    const keys = Object.keys(emotionToImgName);
-    let imageAllLoaded = true;
-    keys.forEach((emotion) => {
-        const imgName = emotionToImgName[emotion];
-        if(imgName=""){
-            if(!(emotion in localStorage)){
-                alert(emotion+" Image is not Loaded!");
-                imageAllLoaded = false;
-            }
-        }
-    });
-    if(imageAllLoaded==true){
-        connectToOBS(serverPort, serverPassword);
-    }
+	const serverPort = document.getElementById("websocketPort").value;
+	const serverPassword = document.getElementById("websocketPassword").value;
+	const storageItem = localStorage.getItem('useAuth');
+	const useAuth = (storageItem === undefined)? document.getElementById("websocketPassword").value:storageItem;
+	const keys = Object.keys(emotionToImgName);
+	let imageAllLoaded = true;
+	keys.forEach((emotion) => {
+	const imgName = emotionToImgName[emotion];
+	if(imgName==""){
+	    if(!(emotion in localStorage)){
+		alert(emotion+" Image is not Loaded!");
+		imageAllLoaded = false;
+	    }
+	}
+	});
+	if(imageAllLoaded==true){
+	connectToOBS(serverPort, serverPassword, useAuth).then(() => {
+		alert("Succesfully Connected to OBS!");
+		localStorage.setItem('serverPort', serverPort);
+		localStorage.setItem('serverPassword', serverPassword);	
+		localStorage.setItem('useAuth', useAuth);
+		const selectItem = document.getElementById('inputSelect');
+		saveVideoCaptureList(selectItem);
+		console.log("videoCaptureList:");
+		console.log(localStorage.getItem("videoInputList") );
+	});
+	}
+}
+
+function selectInputClick(){
+	const currentlySelectedVal = document.getElementById("inputSelect").value;
+	const inputDict = JSON.parse(localStorage.getItem("videoInputList"));
+	if(inputDict===undefined){
+		alert("video inputs not properly saved in localstorage!");
+	}
+	if(currentlySelectedVal==="None"||inputDict[currentlySelectedVal]===undefined){
+		alert("Please select a valid Video Input!");
+		return;
+	}
+	alert("selectedInput:"+currentlySelectedVal+"      uuid:"+inputDict[currentlySelectedVal]);
+	localStorage.setItem("selectedInputName", currentlySelectedVal); 
+	localStorage.setItem("selectedInputUUID", inputDict[currentlySelectedVal]);
 }
 
 function settingsImageUploaded(inputElement, id){
@@ -56,7 +85,7 @@ function settingsImageUploaded(inputElement, id){
         
         console.log("Src: "+base64String);
         const emotion = inputNameToEmotion[id];
-        localStorage.setItem(emotion, base64String);
+        localStorage.setItem(emotionToImgName[emotion], base64String);
         document.getElementById(emotionToImgName[emotion]).src = base64String;
     }
     if(file){
@@ -78,7 +107,7 @@ function initImgs(){
     const keys = Object.keys(emotionToImgName);
     keys.forEach((emotion) => {
         const imgName = emotionToImgName[emotion];
-        if(imgName=""){
+        if(imgName==""){
             if(emotion in localStorage){
                 const img = localStorage[emotion];
                 document.getElementById(imgName).src = img;
@@ -93,5 +122,6 @@ function redirectFunc(){
 }
 
 document.getElementById("obsConnectButton").addEventListener("click", connectToOBSClick);
-document.getElementById("redirectButton").addEventListener("click", redirectFunc);
+document.getElementById("selectInputButton").addEventListener("click", selectInputClick);
+//document.getElementById("redirectButton").addEventListener("click", redirectFunc);
 initImgs();

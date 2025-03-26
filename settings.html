@@ -2,50 +2,84 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <title>Settings</title>
-    <script src="./src/faceapi/face-api.js"></script>
-    <script type = "module" src="./src/obs-module.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	  content="width=device-width, initial-scale=1.0">
+	<title>Settings</title>
+	<style>
+		
+		*:disabled {
+			color: #ccc;
+		}
+	</style>
+	<script src="./src/faceapi/face-api.js"></script>
+	<script type = "module" src="./src/obs-module.js"></script>
 </head>
 
 <body>
-    <label for="websocketPort">Websocket Port:</label>
-    <input type="text" id="websocketPort">
-    <br>
-    <label for="websocketPassword">Websocket Password:</label>
-    <input type="password" id="websocketPassword">
-    <br><br>
+	<label for="websocketPort">Websocket Port:</label>
+	<input type="text" id="websocketPort">
+	<br>
+	<label for="usePassword">Use Authentication(Password)?</label>
+	<input type="checkbox" id="useAuthCheckbox">
+	<label for="websocketPassword" disabled>Websocket Password:</label>
+	<input type="password" id="websocketPassword" disabled>
+	<br><br>
 
-    <label for="neutralImgInput">Neutral Avatar Image: </label>
-    <input type="file" id="neutralImgInput">
-    <img id="neutralImg" src="">
-    <br><br>
-    <label for="happyImgInput">Happy Avatar Image: </label>
-    <input type="file" id="happyImgInput">
-    <img id="happyImg" src="">
-    <br><br>
-    <label for="angryImgInput">Angry Avatar Image: </label>
-    <input type="file" id="angryImgInput">
-    <img id="angryImg" src="">
-    <br><br>
-    <label for="surprisedImgInput">Surprised Avatar Image: </label>
-    <input type="file" id="surprisedImgInput">
-    <img id="surprisedImg" src="">
-    <br><br>
-    <label for="fearfulImgInput">Fearful Avatar Image: </label>
-    <input type="file" id="fearfulImgInput">
-    <img id="fearfulImg" src="">
-    <br><br>
-    <label for="disgustedImgInput">Disgusted Avatar Image: </label>
-    <input type="file" id="disgustedImgInput">
-    <img id="disgustedImg" src="">
-    <br><br>
+	<label for="neutralImgInput">Neutral Avatar Image: </label>
+	<input type="file" id="neutralImgInput">
+	<img id="neutralImg" src="">
+	<br><br>
+	<label for="happyImgInput">Happy Avatar Image: </label>
+	<input type="file" id="happyImgInput">
+	<img id="happyImg" src="">
+	<br><br>
+	<label for="angryImgInput">Angry Avatar Image: </label>
+	<input type="file" id="angryImgInput">
+	<img id="angryImg" src="">
+	<br><br>
+	<label for="sadImgInput">Sad Avatar Image: </label>
+	<input type="file" id="sadImgInput">
+	<img id="sadImg" src="">
+	<br><br>
+	<label for="surprisedImgInput">Surprised Avatar Image: </label>
+	<input type="file" id="surprisedImgInput">
+	<img id="surprisedImg" src="">
+	<br><br>
+	<label for="fearfulImgInput">Fearful Avatar Image: </label>
+	<input type="file" id="fearfulImgInput">
+	<img id="fearfulImg" src="">
+	<br><br>
+	<label for="disgustedImgInput">Disgusted Avatar Image: </label>
+	<input type="file" id="disgustedImgInput">
+	<img id="disgustedImg" src="">
+	<br><br>
 
-    <button id="obsConnectButton">Connect to OBS!</button>
+	<button id="obsConnectButton">Connect to OBS!</button>
+	<br><br>
 
-    <script src="./src/settings.js" type="module"></script>
+	<select id="inputSelect">
+	    <option value="None">Select a Video Input!</option>
+	</select>
+	<br><br>
+	<button id="selectInputButton">Select Input!</button>
+
+	<script>
+		localStorage.removeItem('serverPort');
+		localStorage.removeItem('serverPassword');
+		localStorage.removeItem('selectedInputName');
+		localStorage.removeItem('selectedInputUUID');
+		localStorage.removeItem('useAuth');
+		const checkbox = document.getElementById('useAuthCheckbox');
+		checkbox.addEventListener('change', (e) => {
+			const checked = e.currentTarget.checked;
+			console.log(`checked:${checked}`);
+			localStorage.setItem('useAuth', checked);
+			const passwordInput = document.getElementById('websocketPassword');
+			passwordInput.disabled = !checked;
+		});
+	</script>
+	<script src="./src/settings.js" type="module"></script>
 </body>
 
 </html>

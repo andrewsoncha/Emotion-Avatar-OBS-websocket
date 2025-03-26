@@ -2,20 +2,41 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <title>Settings</title>
-    <script src="./src/faceapi/face-api.js"></script>
-    <script src="./src/settings.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	  content="width=device-width, initial-scale=1.0">
+	<title>Source</title>
+	<!--<script src="./src/faceapi/face-api.js"></script>-->
+	<!--<script src="./src/obs-module.js" type="module"> </script>-->
+	<script src="./src/obs-module.js" type="module"></script>
+	<script defer src="./src/faceapi/face-api.js"></script>
+
+	<style>
+		body {background-color: white;}
+		img {
+			height: 100%;
+			width: 100%;
+			object-fit: contain;
+		}
+	</style>
 </head>
 <body>
-    <image id="lastUploadImg"></image>
-    <script>
+	<!--<img id="lastUploadImg" />-->
+    <img id="emotionImg" />
+    <!--<h1 id="selectedInputName">Input yet to be Selected!</h1>-->
+    <h1 id="emotionText">Emotion Not Set Yet</h1>
+    <!--<h1 id="selectedInputUUID"></h1>-->
+    <!--<p id="imgSrc"></p>-->
+    <!--<script>
         setInterval( () => {
-            document.getElementById("lastUploadImg").src = localStorage.lastImg;
-        }, 100);
-    </script>
+		//const imgElement = document.getElementById("lastUploadImg");
+		const imgElement = undefined;
+		updateImgElement(imgElement); 
+		document.getElementById("lastUploadImg").src = localStorage.lastUploadImg;
+		document.getElementById('imgSrc').textContent = localStorage.lastUploadImg;
+	}, 100);
+    </script>-->
+    <script src="./src/source.js" type="module"></script>
 </body>
 
 </html>

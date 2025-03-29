@@ -1,4 +1,4 @@
-import OBSWebSocket from "https://cdn.jsdelivr.net/npm/obs-websocket-js@5.0.6/dist/obs-ws.global.min.js";
+//import {OBSWebSocket} from "https://cdn.jsdelivr.net/npm/obs-websocket-js@5.0.6/dist/obs-ws.global.min.js";
 
 const obs = new OBSWebSocket();
 

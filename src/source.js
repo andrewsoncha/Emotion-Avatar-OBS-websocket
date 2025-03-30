@@ -35,9 +35,8 @@ alert('source.js loaded!');
 	alert('sourceName:'+sourceName+'    sourceUUID:'+sourceUUID);
 	changeImageWithSource(imgElement, sourceName, sourceUUID);
 }*/
-const emotionText = document.getElementById('emotionText');
 
-function updateImgElement(imgElement, emotionImgElement){
+function updateImgElement(emotionImgElement){
 	const sourceName = localStorage.getItem('selectedInputName');
 	const sourceUUID = localStorage.getItem('selectedInputUUID');
 	const serverPort = localStorage.getItem('serverPort');
@@ -72,7 +71,6 @@ function updateImgElement(imgElement, emotionImgElement){
 			detectExpressionFromImage(imgStr).then( (highestEmotion) => {
 				if(highestEmotion!==undefined){
 					console.log(`highestEmotion: ${highestEmotion}`);
-					emotionText.textContent = highestEmotion;
 					console.log(emotionImgText[highestEmotion]);
 					emotionImgElement.src = emotionImgText[highestEmotion];
 				}
@@ -81,10 +79,9 @@ function updateImgElement(imgElement, emotionImgElement){
 	});
 }
 
+const emotionImgElement = document.getElementById("emotionImg");
 setInterval( () => {
 	(async () => {
-		const imgElement = document.getElementById("lastUploadImg");
-		const emotionImgElement = document.getElementById("emotionImg");
 		updateImgElement(imgElement, emotionImgElement); 
 		//document.getElementById("lastUploadImg").src = localStorage.lastUploadImg;
 		//document.getElementById('imgSrc').textContent = localStorage.lastUploadImg;

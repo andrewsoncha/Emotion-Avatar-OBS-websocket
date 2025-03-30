@@ -82,7 +82,7 @@ function updateImgElement(emotionImgElement){
 const emotionImgElement = document.getElementById("emotionImg");
 setInterval( () => {
 	(async () => {
-		updateImgElement(imgElement, emotionImgElement); 
+		updateImgElement(emotionImgElement); 
 		//document.getElementById("lastUploadImg").src = localStorage.lastUploadImg;
 		//document.getElementById('imgSrc').textContent = localStorage.lastUploadImg;
 	})();

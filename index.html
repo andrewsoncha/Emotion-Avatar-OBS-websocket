@@ -21,6 +21,12 @@ warning {
 	font-weight: bolder;
 	color: red;
 }
+
+link-tab {
+	font-weight: bolder;
+	background-color: lightsteelblue;
+	color: blue;
+}
 </style>
 </head>
  
@@ -28,14 +34,15 @@ warning {
 	<h1> OBS Facial Expression PNGtuber tool by Andrewsoncha</h1>
 	<h2> How to Use: </h2>
 	<p> 1. Have <a href='https://obsproject.com/download'>OBS Studio version 28.0.0 or later</a> installed. The obs-websocket plugin is necessary to use this tool.</p>
-	<p> 2. Under <tabs>Tools > WebSocket Server Settings</tabs>, check Enable WebSocket server, click on Show Connect Info and take note of the server port and password(if authentication is enabled). <warning>ANYONE WHO HAS ACCESS TO THIS INFORMATION CAN CONTROL YOUR OBS. DO NOT SHOW THIS ON STREAM</warning>
+	<p> 2. Under <tabs>Tools > WebSocket Server Settings</tabs>, check <b>Enable WebSocket server</b>, click on <b>Show Connect Info</b> and take note of the server port and password(if authentication is enabled). <warning>ANYONE WHO HAS ACCESS TO THIS INFORMATION CAN CONTROL YOUR OBS. DO NOT SHOW THIS ON STREAM</warning>
 	<p> 3. Open OBS and create a <b>Video Capture Source</b> or a <b>Media Source</b> of a webcam stream or a video of the streamer's face.</p>
 	<p> 4. <tabs>Under Docks -> Custom BrowserDocks...</tabs>, add the URL beflow as a custom dock and click Apply.<br>
-	<link>https://andrewsoncha.github.io/Emotion-Avatar-OBS-websocket/settings.html</link>
+	<link-tab><a href = "https://andrewsoncha.github.io/Emotion-Avatar-OBS-websocket/settings.html">https://andrewsoncha.github.io/Emotion-Avatar-OBS-websocket/settings.html</a></link-tab>
 	</p>
 	<p> 5. In the Browser Dock, enter the server port and password(if authentication is enabled), enter your avatar images for each facial expression, and click <b>Connect to OBS!</b></p>
 	<p> 6. From the Dropdown list below, select the desired video or webcam feed source and click <b>Select Input!</b>
 	<p> 7. Create a <b>Browser Source</b> of the URL below. Make sure that the Dimensions of the browser source matches that of the images you uploaded. </p>
+	<link-tab><a href = "https://andrewsoncha.github.io/Emotion-Avatar-OBS-websocket/source.html">https://andrewsoncha.github.io/Emotion-Avatar-OBS-websocket/source.html</a></link-tab>
 
 	<br><br><br>
 	<p>If you have any questions, feedback, or issues, please open an Issue at <a href = "https://github.com/andrewsoncha/Emotion-Avatar-OBS-websocket">the github repo</a> or contact me at <a href="andrewsoncha2@gmail.com">andrewsoncha2@gmail.com</a>

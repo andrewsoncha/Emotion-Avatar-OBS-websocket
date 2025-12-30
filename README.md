@@ -4,7 +4,7 @@
  1. Have <a href='https://obsproject.com/download'>OBS Studio version 28.0.0 or later</a> installed. </p>
  2. Under `Tools > WebSocket Server Settings`, check **Enable WebSocket server**, click on **Show Connect Info** and take note of the server port and password(if authentication is enabled). **ANYONE WHO HAS ACCESS TO THIS INFORMATION CAN CONTROL YOUR OBS. DO NOT SHOW THIS ON STREAM**
  3. Open OBS and create a **Video Capture Source** or a **Media Source** of a webcam stream or a video of the streamer's face.
- 4. `Under Docks -> Custom BrowserDocks...`, add the URL below as a custom dock and click **Apply**.
+ 4. Under `Docks -> Custom BrowserDocks...`, add the URL below as a custom dock and click **Apply**.
 
 ```
 https://andrewsoncha.github.io/Emotion-Avatar-OBS-websocket/settings.html

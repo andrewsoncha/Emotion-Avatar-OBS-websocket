@@ -220,6 +220,10 @@ export function saveVideoCaptureList(selectElement){
     checkSendErrorMessage();
     alert('setVideoCaptureList called Succesfully!');
 	obs.call('GetCurrentProgramScene').then((currentProgramSceneName) => console.log(currentProgramSceneName));
+	obs.call('GetInputKindList').then((inputKindList) => {
+		console.log('inputKindList: ');
+		console.log(inputKindList)
+	});
         obs.call('GetInputList').then((list) => console.log(list));
 	//todo: fix this part so it actually saves or returns both the list of dshow_input and list of ffmpeg_source
 	localStorage.setItem("videoInputList", []);
@@ -268,6 +272,36 @@ export function saveVideoCaptureList(selectElement){
 			newOption.text = inputInfo;
 			selectElement.appendChild(newOption);
 		});
+	}).then(() => {
+		obs.call('GetInputList', {inputKind: 'av_capture_input_v2'}).then((avCaptureInputList) => {
+			    console.log('avCaptureInputList');
+			    console.log(avCaptureInputList);
+			    const returningInputDictString = localStorage.getItem("videoInputList");
+			    let returningInputDict = {};
+			    if(returningInputDictString!==""){
+				returningInputDict = JSON.parse(returningInputDictString);
+			    }
+			    console.log('returningInputDict');
+			    console.log(returningInputDict);
+			    if(avCaptureInputList.inputs!=undefined){
+				console.log('avCaptureInputList pushed');
+				avCaptureInputList.inputs.forEach( (input) => {
+					console.log('input:');
+					console.log(input);
+					returningInputDict[input.inputName] = input.inputUuid;
+				});
+			    }
+			    console.log('returningInputDict:');
+			    console.log(returningInputDict);
+			    localStorage.setItem("videoInputList", JSON.stringify(returningInputDict));
+				
+			    Object.keys(returningInputDict).forEach((inputInfo) => {
+				    let newOption = document.createElement("option");
+				    newOption.value = inputInfo;
+				    newOption.text = inputInfo;
+				    selectElement.appendChild(newOption);
+			    });
+		})
 	});
 	});
 }
